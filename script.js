@@ -63,6 +63,18 @@ function resetSelected(){
   })
 }
 
+// Reset Score & playerChoice/computerChoice
+function resetAll(){
+  playerScoreNumber = 0
+  computerScoreNumber = 0
+  playerScoreEl.textContent = playerScoreNumber
+  computerScoreEl.textContent = computerScoreNumber
+  playerChoiceEl.textContent = ''
+  computerChoiceEl.textContent = ''
+  resultText.textContent = ''
+  resetSelected()
+}
+
 // Passing player selection value and styling icons
 function select(playerChoice){
   checkResult(playerChoice)
@@ -155,3 +167,6 @@ function checkResult(playerChoice){
   displayComputerChoice()
   updateScore(playerChoice)
 }
+
+// On startup, set initial value
+resetAll()
