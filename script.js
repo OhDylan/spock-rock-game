@@ -27,6 +27,35 @@ const choices = {
   spock: { name: 'Spock', defeats: ['scissors', 'rock'] },
 };
 
+let playerScoreNumber = 0
+let computerScoreNumber = 0
+let computerChoice = ''
+
+// Random computer choice
+function computerRandomChoice(){
+  const computerChoiceNumber = Math.random()
+  if(computerChoiceNumber < 0.2)
+  {
+    computerChoice = 'rock'
+  }
+  else if(computerChoiceNumber <= 0.4)
+  {
+    computerChoice = 'paper'
+  }
+  else if(computerChoiceNumber <= 0.6)
+  {
+    computerChoice = 'scissors'
+  }
+  else if(computerChoiceNumber <= 0.8)
+  {
+    computerChoice = 'lizard'
+  }
+  else
+  {
+    computerChoice = 'spock'
+  }
+}
+
 // Reset all 'selected' icons
 function resetSelected(){
   allGameIcons.forEach((icon) => {
@@ -36,7 +65,7 @@ function resetSelected(){
 
 // Passing player selection value and styling icons
 function select(playerChoice){
-  resetSelected()
+  checkResult(playerChoice)
   // Add 'selected' styling & playerChoice
   switch(playerChoice)
   {
@@ -63,4 +92,66 @@ function select(playerChoice){
     default:
       break
   }
+}
+
+// Passing computer selection value and styling icons
+function displayComputerChoice(){
+  // Add 'selected' styling & computerChoice
+  switch(computerChoice)
+  {
+    case 'rock':
+      computerRock.classList.add('selected')
+      computerChoiceEl.textContent = ' --- Rock'
+      break
+    case 'paper':
+      computerPaper.classList.add('selected')
+      computerChoiceEl.textContent = ' --- Paper'
+      break
+    case 'scissors':
+      computerScissors.classList.add('selected')
+      computerChoiceEl.textContent = ' --- Scissors'
+      break
+    case 'lizard':
+      computerLizard.classList.add('selected')
+      computerChoiceEl.textContent = ' --- Lizard'
+      break
+    case 'spock':
+      computerSpock.classList.add('selected')
+      computerChoiceEl.textContent = ' --- Spock'
+      break
+    default:
+      break
+  }
+}
+
+// Check result, increase scores, update resultText
+function updateScore(playerChoice){
+  if(playerChoice === computerChoice)
+  {
+    resultText.textContent = "It's a tie."
+  }
+  else
+  {
+    const choice = choices[playerChoice]
+    if(choice.defeats.indexOf(computerChoice) > -1)
+    {
+      resultText.textContent = 'You won!'
+      playerScoreNumber++
+      playerScoreEl.textContent = playerScoreNumber
+    }
+    else
+    {
+      resultText.textContent = 'You lost!'
+      computerScoreNumber++
+      computerScoreEl.textContent = computerScoreNumber
+    }
+  }
+}
+
+// Call fiunctions to process turn
+function checkResult(playerChoice){
+  resetSelected()
+  computerRandomChoice()
+  displayComputerChoice()
+  updateScore(playerChoice)
 }
